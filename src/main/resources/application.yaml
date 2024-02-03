@@ -1,0 +1,33 @@
+
+# Code decode 17:42
+# https://www.udemy.com/course/master-spring-boot-microservice-angular-with-k8s-cicd-aws/learn/lecture/38836138#questions/20403382
+
+# I want all my microservices restaurant listing microservice, food catalog, microservice
+# and order service to work on 909X series.
+
+ # I also want this application to register to Eureka to make it as a Eureka client,
+#   I need to tell where to look for Eureka Server.
+#   So I'm going to add now the properties to connect to the Eureka Server.
+#   So Eureka Client service URL to localhost 8761.
+
+#  Now before starting this application, also we need to remember to start our Eureka server,
+#  otherwise  you will get the connection error.
+
+
+spring:
+  profiles:
+    active: local
+  application:
+    name: RESTAURANT-SERVICE
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+logging:
+  level:
+    org.springframework: INFO
+    org.hibernate: INFO

@@ -1,0 +1,47 @@
+eureka:
+  instance:
+    preferIpAddress: true
+    hostname: eureka-0
+  client:
+    service-url:
+      defaultZone: http://eureka-0.eureka-service.default.svc.cluster.local:8761/eureka
+
+
+                    # ▬▬ This is service URL for eureka in cloud cluster to connect with eureka server ▬▬
+
+    # http://
+                # This part of the URL indicates that it is using the HTTP protocol for communication.
+
+    # eureka-0:
+                # This is the hostname or subdomain part of the URL.
+                # It typically refers to a specific instance or node within a service discovery system.
+                # In this case, "eureka-0" might represent the first instance or node of the Eureka service.
+
+    # eureka-service: 
+                # This part of the URL is the name of the service or application that you are trying to access.
+                # It's common to use service names for routing requests to different parts of a
+                # microservices architecture.
+
+    #default:
+                # This is the namespace or context which the Eureka and pods are deployed
+                # In Kubernetes, for example, "default" is a common namespace.
+
+    #svc:
+                # This likely stands for "service" and is used in Kubernetes
+                # to route requests to services within the cluster.
+
+    #cluster.local:
+                # This is the domain suffix for Kubernetes service within the cluster
+
+    #8761:
+                # This is the port number on which the Eureka service is running.
+
+    #/eureka:
+               # This is the path or endpoint that you are trying to access within the Eureka service.
+               # It might be a specific API or dashboard provided by Eureka.
+
+    # This whole URL
+               # represents the endpoint within the Kubernetes cluster,
+                           # where service can register
+                           # and discover other services
+                                       # using the Eureka Service Registry.
