@@ -1,4 +1,4 @@
-package codeddecode.restaurantlisting.controller;
+package com.codeddecode.restaurantlisting.controller;
 
 
 import com.codeddecode.restaurantlisting.controller.RestaurantController;
@@ -15,35 +15,49 @@ import org.springframework.http.ResponseEntity;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
+// @ExtendWith(MockitoExtension.class)
+// this annotation eliminate   MockitoAnnotations.openMocks(this);f
 public class RestaurantControllerTest {
 
+   //  call becomes @InjectMocks
+  // It will inject the dependency of controller for the testing of this class.
     @InjectMocks
     RestaurantController restaurantController;
 
+    // What you do not want to call becomes the mock.
+    // in controller you should always mock the service.
     @Mock
     RestaurantService restaurantService;
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this); //in order for Mock and InjectMocks annotations to take effect, you need to call MockitoAnnotations.openMocks(this);
+      //in order for @Mock and @InjectMocks annotations to take effect,
+      // you need to call MockitoAnnotations.openMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
+
 
     @Test
     public void testFetchAllRestaurants(){
-        // Mock the service behavior
+       // 1. Arrange
+          // - Create test data
         List<RestaurantDTO> mockRestaurants = Arrays.asList(
                 new RestaurantDTO(1, "Restaurant 1", "Address 1", "city 1", "Desc 1"),
                 new RestaurantDTO(2, "Restaurant 2", "Address 2", "city 2", "Desc 2")
         );
-        when(restaurantService.findAllRestaurants()).thenReturn(mockRestaurants);
+      // Mock the service
+      when(restaurantService.findAllRestaurants()).thenReturn(mockRestaurants);
 
-        // Call the controller method
+        // 2. Act
+            // -Call the controller method
         ResponseEntity<List<RestaurantDTO>> response = restaurantController.fetchAllRestaurants();
 
-        // Verify the response
+
+        // 3. Assert
+                // Verify the response
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(mockRestaurants, response.getBody());
 

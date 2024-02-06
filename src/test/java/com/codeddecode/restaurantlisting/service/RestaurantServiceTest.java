@@ -1,15 +1,15 @@
-package codeddecode.restaurantlisting.service;
+package com.codeddecode.restaurantlisting.service;
 
 import com.codeddecode.restaurantlisting.dto.RestaurantDTO;
 import com.codeddecode.restaurantlisting.entity.Restaurant;
 import com.codeddecode.restaurantlisting.mapper.RestaurantMapper;
 import com.codeddecode.restaurantlisting.repo.RestaurantRepo;
 import com.codeddecode.restaurantlisting.service.RestaurantService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -20,6 +20,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+
+@ExtendWith(MockitoExtension.class)
 public class RestaurantServiceTest {
 
     @Mock
@@ -28,24 +30,19 @@ public class RestaurantServiceTest {
     @InjectMocks
     RestaurantService restaurantService;
 
-    @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this); //in order for Mock and InjectMocks annotations to take effect, you need to call MockitoAnnotations.openMocks(this);
-    }
-
     @Test
     public void testFindAllRestaurants() {
-        // Create mock restaurants
+        // 1 . Arrange - Create mock restaurants
         List<Restaurant> mockRestaurants = Arrays.asList(
                 new Restaurant(1, "Restaurant 1", "Address 1", "city 1", "Desc 1"),
                 new Restaurant(2, "Restaurant 2", "Address 2", "city 2", "Desc 2")
         );
         when(restaurantRepo.findAll()).thenReturn(mockRestaurants);
 
-        // Call the service method
+        // 2. Act    - Call the service method
         List<RestaurantDTO> restaurantDTOList = restaurantService.findAllRestaurants();
 
-        // Verify the result
+        // 3. Assert Verify the result
         assertEquals(mockRestaurants.size(), restaurantDTOList.size());
         for (int i = 0; i < mockRestaurants.size(); i++) {
             RestaurantDTO expectedDTO = RestaurantMapper.INSTANCE.mapRestaurantToRestaurantDTO(mockRestaurants.get(i));

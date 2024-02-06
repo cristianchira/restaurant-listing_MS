@@ -45,8 +45,6 @@ package com.codeddecode.restaurantlisting;
                  * always interact with your consumers with the data transfer objects and
                  * will not have entities interacting.
 
-
-
  */
 
 
