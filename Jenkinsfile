@@ -61,9 +61,13 @@ pipeline {
 
       stage('Docker Build and Push') {
       steps {
-          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-          sh 'docker build -t codedecode25/restaurant-listing-service:${VERSION} .'
-          sh 'docker push codedecode25/restaurant-listing-service:${VERSION}'
+      // sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+          // Inject Docker Hub credentials securely
+          withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+          // Login to Docker Hub using the injected credentials
+          sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
+          sh 'docker build -t cristianchira/restaurant-listing-service:${VERSION} .'
+          sh 'docker push cristianchira/restaurant-listing-service:${VERSION}'
       }
     }
 
