@@ -25,8 +25,8 @@
 # Stage 1: Build the application
 FROM openjdk:17-oracle AS builder
 WORKDIR /app
-RUN chmod +x ./mvnw
 COPY . .
+RUN chmod +x ./mvnw
 RUN ./mvnw clean package -DskipTests
 
 # Stage 2: Create a minimal runtime image
