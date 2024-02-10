@@ -61,11 +61,17 @@ pipeline {
 
       stage('Docker Build and Push') {
       steps {
-          sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-          sh 'docker build -t cristianchira/restaurant-listing-service:${VERSION} .'
-          sh 'docker push cristianchira/restaurant-listing-service:${VERSION}'
+          script {
+          // Injecting credentials from DOCKERHUB_CREDENTIALS
+          withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+              // Now DOCKERHUB_USR and DOCKERHUB_PSW are available as environment variables within this block
+              sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
+              sh 'docker build -t cristianchira/restaurant-listing-service:${VERSION} .'
+              sh 'docker push cristianchira/restaurant-listing-service:${VERSION}'
+          }
       }
     }
+   }
 
 
      stage('Cleanup Workspace') {
