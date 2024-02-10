@@ -2,9 +2,8 @@ pipeline {
   agent any
 
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('DOCKER_HUB_CREDENTIAL')
+    DOCKERHUB_CREDENTIALS = credentials('DOCKERHUB_CREDENTIAL')
     VERSION = "${env.BUILD_ID}"
-
   }
 
   tools {
